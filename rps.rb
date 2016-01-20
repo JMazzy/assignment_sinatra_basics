@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'sinatra'
 require 'pry-byebug'
-require 'helpers/rps_helper.rb'
+require './helpers/rps_helper.rb'
 
 helpers RPSHelper
 
@@ -9,15 +9,17 @@ get '/' do
   erb :play
 end
 
-
 post '/' do
   move = params[:move]
+  result = check_move(move)
 
-  if check_move(move) == :draw
+  if result[0] == :draw
     output = "It's a tie!"
-  # elsif
-  #   output =
+  elsif result[0] == :win
+    output = "You Won!"
+  else
+    output = "Sorry you lose."
   end
 
-  erb :result, locals: {output:output}
+  erb :result, locals: {output: output, move: move, compmove: result[1]}
 end

@@ -14,5 +14,4 @@ post '/boss' do
   input = params[:input]
 
   erb :output, locals: {input: input}
-  redirect to ('/boss')
 end
